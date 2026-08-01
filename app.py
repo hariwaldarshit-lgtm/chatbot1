@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify, render_template
 # Config
 # ---------------------------------------------------------------------------
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 MAX_OUTPUT_TOKENS = int(os.environ.get("MAX_NEW_TOKENS", "800"))
 MAX_HISTORY_TURNS = int(os.environ.get("MAX_HISTORY_TURNS", "6"))
 SYSTEM_PROMPT = os.environ.get(
