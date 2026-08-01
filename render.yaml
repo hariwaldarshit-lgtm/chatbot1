@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: omslawhouse-chatbot
+    env: python
+    plan: free              # no local model anymore, this is just an API proxy
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: GEMINI_API_KEY
+        sync: false          # set this manually in the Render dashboard (Secret)
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash
+      - key: BRAND_NAME
+        value: Omslawhouse
+      - key: MAX_NEW_TOKENS
+        value: "800"
