@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify, render_template
 # ---------------------------------------------------------------------------
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
-MAX_OUTPUT_TOKENS = int(os.environ.get("MAX_NEW_TOKENS", "800"))
+MAX_OUTPUT_TOKENS = int(os.environ.get("MAX_NEW_TOKENS", "8192"))
 MAX_HISTORY_TURNS = int(os.environ.get("MAX_HISTORY_TURNS", "6"))
 SYSTEM_PROMPT = os.environ.get(
     "SYSTEM_PROMPT",
@@ -87,6 +87,13 @@ def generate_response(history, user_message):
     text = "".join(p.get("text", "") for p in parts).strip()
     if not text:
         raise RuntimeError("Model returned an empty response.")
+
+    finish_reason = candidates[0].get("finishReason", "")
+    if finish_reason == "MAX_TOKENS":
+        text += (
+            "\n\n[Response was cut off at the token limit — reply \"continue\" "
+            "to get the rest.]"
+        )
     return text
 
 
