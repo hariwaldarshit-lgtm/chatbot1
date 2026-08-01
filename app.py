@@ -33,7 +33,7 @@ state = {
     "message": (
         "Ready."
         if GEMINI_API_KEY
-        else "GEMINI_API_KEY is not set. Add it in your host's environment settings."
+        else "OMSLAWHOUSE_API_KEY is not set. Add it in your host's environment settings."
     ),
 }
 
@@ -108,7 +108,7 @@ def chat():
     if not GEMINI_API_KEY:
         return jsonify({
             "error": "not_ready",
-            "message": "GEMINI_API_KEY is not set. Add it in your host's environment settings.",
+            "message": "OMSLAWHOUSE_API_KEY is not set. Add it in your host's environment settings.",
         }), 503
 
     data = request.get_json(silent=True) or {}
